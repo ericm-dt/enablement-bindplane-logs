@@ -422,9 +422,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6view-the-configuration-and-pipeline" class="md-nav__link">
+  <a href="#6-view-the-configuration-and-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
-      6.View the Configuration and Pipeline
+      6. View the Configuration and Pipeline
     </span>
   </a>
   
@@ -650,9 +650,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6view-the-configuration-and-pipeline" class="md-nav__link">
+  <a href="#6-view-the-configuration-and-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
-      6.View the Configuration and Pipeline
+      6. View the Configuration and Pipeline
     </span>
   </a>
   
@@ -721,13 +721,13 @@
 <p><img alt="alt text" src="../img/4-bindplane-configuration/2-find-source.png" /></p>
 <h3 id="3-configure-the-file-source">3. Configure the File source<a class="headerlink" href="#3-configure-the-file-source" title="Permanent link">#</a></h3>
 <ol>
-<li>Create a descriptive name, like "Syslog File" your source</li>
+<li>Create a descriptive name, like "Syslog File" for your source</li>
 <li>Add the Syslog file path that we examined before:  <code>/var/log/bpsystem/syslog</code></li>
 <li>Click "Next"</li>
 </ol>
 <p><img alt="alt text" src="../img/4-bindplane-configuration/3-add-source.png" /></p>
 <h3 id="4-create-a-destination">4. Create a Destination<a class="headerlink" href="#4-create-a-destination" title="Permanent link">#</a></h3>
-<p>We need to send our logs somwhere to make use of them.  Let's create a Destination that weill send our logs to Dynatrace.</p>
+<p>We need to send our logs somewhere to make use of them.  Let's create a Destination that will send our logs to Dynatrace.</p>
 <ol>
 <li>Click "Add Destination"</li>
 <li>Seach for "Dynatrace"</li>
@@ -738,19 +738,19 @@
 <ol>
 <li>Give this Destination a descriptive name</li>
 <li>Enter your Dynatrace <a href="https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id">Environment Id</a> </li>
-<li>Enter the token you created for that enviroment in the <a href="../2-getting-started">Getting Started</a> section.</li>
+<li>Enter the token you created for that environment in the <a href="../2-getting-started">Getting Started</a> section.</li>
 </ol>
 <p><img alt="alt text" src="../img/4-bindplane-configuration/5-create-destination.png" /></p>
 <p>Alternatively, you can enter a custom <a href="https://docs.dynatrace.com/docs/ingest-from/opentelemetry/otlp-api#base-url">Dynatrace OTLP endpoint</a> url by choosing "Custom" in the dropdown:</p>
 <p><img alt="alt text" src="../img/4-bindplane-configuration/5-alt.png" /></p>
 <p>Click "Save" and you'll be sent to the Configuration you just created.</p>
-<h3 id="6view-the-configuration-and-pipeline">6.View the Configuration and Pipeline<a class="headerlink" href="#6view-the-configuration-and-pipeline" title="Permanent link">#</a></h3>
+<h3 id="6-view-the-configuration-and-pipeline">6. View the Configuration and Pipeline<a class="headerlink" href="#6-view-the-configuration-and-pipeline" title="Permanent link">#</a></h3>
 <p>We've created a Bindplane Configuration that can deployed wherever we need to collect and send logs.  You can see the logs pipeline we created, but it's not doing much right now because we haven't told any agents to use it.  Scroll down and you'll see a listing of all the agents using this configuration (none yet!), and a button to "Add Agents".</p>
 <p><img alt="alt text" src="../img/4-bindplane-configuration/6-view-pipeline.png" /></p>
 <h3 id="7-add-the-agents-to-the-configuration">7. Add the Agents to the Configuration<a class="headerlink" href="#7-add-the-agents-to-the-configuration" title="Permanent link">#</a></h3>
 <ol>
 <li>Click "Add Agents"</li>
-<li>In the pop-up dialong, choose the Agent you created earlier</li>
+<li>In the pop-up dialog, choose the Agent you created earlier</li>
 <li>Click "Apply"</li>
 </ol>
 <p><img alt="alt text" src="../img/4-bindplane-configuration/7-add-agent.png" /></p>
@@ -767,7 +767,7 @@
 <ol>
 <li>Visit your Dynatrace environment and open the "Logs" app from the left-hand navigation (or search for it by using the search function in the top-left)</li>
 <li>Click the "Run Query" button to fetch the latest logs from your environment.</li>
-<li>Vew the results.  You might have a mix of logs from all places in this view since this is <em>everything</em> in your environment.  The syslogs for this lab can be identified by starting with a number enclosed in <code>&lt;</code> and <code>&gt;</code>, followed by a timestamp, followed by the hostname of your Dev Container (which should match the agent name we created earlier).</li>
+<li>View the results.  You might have a mix of logs from all places in this view since this is <em>everything</em> in your environment.  The syslogs for this lab can be identified by starting with a number enclosed in <code>&lt;</code> and <code>&gt;</code>, followed by a timestamp, followed by the hostname of your Dev Container (which should match the agent name we created earlier).</li>
 </ol>
 <p>Example:
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;6&gt;1 2026-08-05T15:48:17.953Z lima-rancher-desktop ...

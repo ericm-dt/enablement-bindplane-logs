@@ -80,6 +80,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#masking-data-routing" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -387,6 +392,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    7. Masking Data & Routing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -396,6 +412,83 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#masking-data-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Masking Data &amp; Routing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Masking Data & Routing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-a-new-processor-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Create a New Processor Node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mask-sensitive-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Mask Sensitive Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-routing-data-selectively" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Routing Data Selectively
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-connect-the-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Connect the Routes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-in-dynatrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Verify in Dynatrace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -459,6 +552,74 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#masking-data-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Masking Data &amp; Routing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Masking Data & Routing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-a-new-processor-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Create a New Processor Node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mask-sensitive-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Mask Sensitive Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-routing-data-selectively" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Routing Data Selectively
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-connect-the-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Connect the Routes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-in-dynatrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Verify in Dynatrace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -477,7 +638,91 @@
 
   <h1>7. Masking Data & Routing</h1>
 
-<p>Topics:  redact sensitive data processor, routers</p>
+<h2 id="masking-data-routing">Masking Data &amp; Routing<a class="headerlink" href="#masking-data-routing" title="Permanent link">#</a></h2>
+<p>Uh oh.  You were sitting in on a meeting and you heard one of the DevOps engineers mention that they wrote a script that manages cloud infrastructure from one of the hosts in your network (your Dev Container!).  This can't be good.</p>
+<p>You know that the <code>auditd</code> system logs every command that was run on the system.  There's a real possibility of a credential leak here.  Let's investigate.</p>
+<div class="admonition warning">
+<p class="admonition-title">Example Credentials</p>
+<p>All logs in the lab, including the ones in this exercise are randomly and synthetically generated.</p>
+</div>
+<p>Let's look through our logs for any credentials for our vendor, <strong>Big Cloud Hyperscaler</strong>.</p>
+<p>Head back to the Logs app in Dynatrace and filter for the terms "BCH" and "KEY" in our log messages.</p>
+<p><img alt="Exposed Keys" src="../img/7-masking-routing/1-sensitive-data-unredacted.png" /></p>
+<p>As we suspected, credentials in plain text in our logs.  The quickest way to mitigate this is to prevent that data from leaving our infrastructure.</p>
+<p>Let's use Bindplane to mask the sensitive data.  Navigate to your Bindplane Configuration so we can make these changes.</p>
+<h3 id="1-create-a-new-processor-node">1. Create a New Processor Node<a class="headerlink" href="#1-create-a-new-processor-node" title="Permanent link">#</a></h3>
+<p><em>Spoiler alert: We're looking a bit into the future here.  Normally you could just add the masking processor to one of your existing Processor Nodes.  But for the purposes of the Lab, we're going to pre-optimize for what we know is coming and create an additional one.</em></p>
+<p>Click on the pencil icon in the connection between your existing Processor Nodes, and select "Insert Processor Node"</p>
+<p><img alt="Insert Processor Node" src="../img/7-masking-routing/1-insert-processor-node.png" /></p>
+<p>Then click "Start Rollout" so we can actually send our logs through it.</p>
+<h3 id="2-mask-sensitive-data">2. Mask Sensitive Data<a class="headerlink" href="#2-mask-sensitive-data" title="Permanent link">#</a></h3>
+<p>Now we're going to use Bindplane's <a href="https://docs.bindplane.com/integrations/processors/redact-sensitive-data">Redact Sensitive Data Processor</a> to mask the credentials.</p>
+<p>After the rollout is complete, click on the new node so we can add the processor.</p>
+<ol>
+<li>Search for "BCH" in the search bar so we can narrow our focus to the offending logs</li>
+<li>Search for the "Redact Sensitive Data" processor in the list</li>
+<li>Select it when it surfaces</li>
+</ol>
+<p><img alt="Redact Sensitive Data Processor" src="../img/7-masking-routing/2-redact-processor.png" /></p>
+<p>Our strategy for redaction will be:
+- we want to keep as much of the original log message intact as possible, we only want to redact the actual sensitive data
+- we are going to use a <strong>hashing</strong> strategy.  This way, only non-sensitive hashes are exposed, but they are one-way mappable back to our exposed credentials.  Internally, we can make an assessment of which credentials were exposed.</p>
+<div class="admonition tip">
+<p class="admonition-title">Credential Regex</p>
+<ul>
+<li>The BCH access key takes the form of the string "BCHK" followed by 16 alpha numeric upper case characters.  The regex for that is:  <code>BCHK[A-Z0-9]{16}</code></li>
+<li>The secret access key is simply a 40 character mixed-case string.  <code>[A-Za-z0-9/+]{40}</code></li>
+</ul>
+</div>
+<ol>
+<li>Create a descriptive name for this processor</li>
+<li>Change the Redaction Strategy to "Hashing"</li>
+<li>Uncheck "Redaction Rule Presets".  Although this is very useful and convenient, we'll just focus on our immediate issue for now</li>
+<li>Create two custom rules for the two credentials we want to redact.  Enter the regular expressions that match them</li>
+<li>Click "Save" at the bottom of that dialog so we can preview our changes</li>
+</ol>
+<p><img alt="Redaction Settings" src="../img/7-masking-routing/2-redaction-settings.png" /></p>
+<p>Success!!!  Our sensitive credentials have been replaced with hashed strings, and the rest of our log message remains intact, so we can still work with them in full detail.</p>
+<p><img alt="Redacted Credentials" src="../img/7-masking-routing/2-redacted-credentials.png" /></p>
+<p>Click "Save" at the bottom to save changes to the processor and return to our pipeline config.</p>
+<h3 id="3-routing-data-selectively">3. Routing Data Selectively<a class="headerlink" href="#3-routing-data-selectively" title="Permanent link">#</a></h3>
+<p>Wait a second.  We are sending <em>all</em> logs through our processor.  Is it possible that our regex could match some other data that has a similar format, but <em>isn't</em> a credential?</p>
+<p><strong>Don't roll out the changes just yet!</strong></p>
+<p>We can narrow down our redaction to specific logs using <a href="https://docs.bindplane.com/integrations/connectors/routing">Routing</a>.  Similar to the Dynamic Route we created in OpenPipeline, we can inspect our logs and route them through our pipeline.</p>
+<p>Begin by clicking the pencil icon between the first Processing Node coming out of the Syslog source and the new one we just created.</p>
+<p>Choose "Insert Connector", and then choose "Routing"</p>
+<p>Here is where we will create our routing logic.  The Router uses <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/pkg/ottl/README.md">OTTL</a> conditions to match the log messages and then route them appropriately.</p>
+<p>The routes are evaluated in order, and the first match wins.  So we want to place our most specific rules at the top, and our general "catch-all" rules at the bottom.</p>
+<p>Let's create two routes - one that will match our credential-exposed logs, and then a "default" route to match everything else.</p>
+<div class="admonition tip">
+<p class="admonition-title">OTTL IsMatch</p>
+<p>The input to the router can take any OTTL expression, but the <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/pkg/ottl/ottlfuncs/README.md#ismatch">IsMatch</a> function is a great candidate for this.</p>
+</div>
+<p>Can you think of a good way to filter for only logs that contain our sensitive credentials?</p>
+<p>Let's target logs that contain the key names for our credentials:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>IsMatch(body, &quot;BCH_ACCESS_KEY_ID=|BCH_SECRET_ACCESS_KEY=&quot;)
+</span></code></pre></div>
+<p>This will match the <code>body</code> field against the regular expression provided as the second argument.</p>
+<p>But the UI will help you write OTTL conditions!</p>
+<ol>
+<li>Identify the first route indicating that it is for logs containing the credentials "bch-credentials"</li>
+<li>Choose to match the Log, choose the "body" field, and then choose "Matches"</li>
+<li>Enter the regular expression <code>BCH_ACCESS_KEY_ID=|BCH_SECRET_ACCESS_KEY=</code></li>
+<li>Name the second route "default" and don't create any conditions</li>
+<li>Click "Save"</li>
+</ol>
+<p><img alt="Routing Config" src="../img/7-masking-routing/3-routing-config.png" /></p>
+<h3 id="4-connect-the-routes">4. Connect the Routes<a class="headerlink" href="#4-connect-the-routes" title="Permanent link">#</a></h3>
+<p>Now we just need to wire everything up to route our data effectively.</p>
+<p>Once you Save the Routing node, you'll see it inserted into your pipeline.  The default connection should connect the <code>bch-credentials</code> route to the New Processor Node containing the Redaction Processor.  Handy! That's what we want.  Now all we have to do is route <code>default</code> around the new processor to keep them flowing.</p>
+<p><img alt="Initial Route" src="../img/7-masking-routing/4-initial-route.png" /></p>
+<p>Now just click on the plus "+" icon on the right side of the <code>default</code> route, and then click on the Processor Node that feeds into the Dynatrace Destination.</p>
+<p><img alt="alt text" src="../img/7-masking-routing/4-connected-route.png" /></p>
+<p>Click "Start Rollout" to apply changes.</p>
+<h3 id="5-verify-in-dynatrace">5. Verify in Dynatrace<a class="headerlink" href="#5-verify-in-dynatrace" title="Permanent link">#</a></h3>
+<p>Head back over to Dynatrace and have a look at one of the most recent logs.</p>
+<p>Success!  Now we see hashed values instead of our sensitive credentials!</p>
+<p><img alt="Hashed Credentials" src="../img/7-masking-routing/5-hashed-credentials.png" /></p>
 
 
 

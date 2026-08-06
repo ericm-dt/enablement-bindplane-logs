@@ -676,7 +676,7 @@
 
 <h2 id="adding-a-field-using-a-bindplane-processor">Adding a Field using a Bindplane Processor<a class="headerlink" href="#adding-a-field-using-a-bindplane-processor" title="Permanent link">#</a></h2>
 <p><em>add some text about what processors are for</em></p>
-<p>Take a look at our Syslogs in Dynatrace.  They're mixed in with everything else that is streaming in to our Dyntrace environment.</p>
+<p>Take a look at our Syslogs in Dynatrace.  They're mixed in with everything else that is streaming in to our Dynatrace environment.</p>
 <p><img alt="alt text" src="../img/5-add-field/1-mixed-logs.png" /></p>
 <p>Let's use a Bindplane processor to help us sort this out.</p>
 <h3 id="1-open-the-processors-configuration">1. Open the Processors Configuration<a class="headerlink" href="#1-open-the-processors-configuration" title="Permanent link">#</a></h3>
@@ -704,21 +704,21 @@
 <p><img alt="Configure Processor" src="../img/5-add-field/4-configure-add-fields.png" />
 3. Click "Save", and let's preview our changes</p>
 <h3 id="5-preview-changes">5. Preview Changes<a class="headerlink" href="#5-preview-changes" title="Permanent link">#</a></h3>
-<p>Now we're back to our processor node configuration.  We can see that our processer has been added.  Expand one of the logs messages on the left.  We can see what our log message would look like if passed through this node, with our new field!</p>
+<p>Now we're back to our processor node configuration.  We can see that our processor has been added.  Expand one of the logs messages on the left.  We can see what our log message would look like if passed through this node, with our new field!</p>
 <p>Notice as well that Bindplane has enriched our logs by adding some fields such as the <code>log_type</code> as well as some <a href="https://opentelemetry.io/docs/concepts/resources/">OpenTelemetry Resource</a> attributes.</p>
 <p><img alt="Added Field" src="../img/5-add-field/5-added-field.png" /></p>
 <p>Click the "Save" button at the bottom.  We had previously saved our changes to the individual processor that we created.  This will save <em>all</em> changes made to this processor node (if we added or edited multiple processors, for example).</p>
 <h3 id="6-rollout-to-the-agent">6. Rollout to the Agent<a class="headerlink" href="#6-rollout-to-the-agent" title="Permanent link">#</a></h3>
-<p>We're back at our configuration and we can see that our processor node is indicating that we have one processer now.  But also notice that we're prompted to "Start Rollout" and that we are currenty viewing a draft version of our configuration.</p>
+<p>We're back at our configuration and we can see that our processor node is indicating that we have one processor now.  But also notice that we're prompted to "Start Rollout" and that we are currently viewing a draft version of our configuration.</p>
 <p><img alt="Rollout Changes" src="../img/5-add-field/6-rollout.png" /></p>
-<p>Even though we've saved our changes to the configuration itself, the final step is to roll it out to the agents that use it (in our case, the singe agent we added).</p>
+<p>Even though we've saved our changes to the configuration itself, the final step is to roll it out to the agents that use it (in our case, the single agent we added).</p>
 <p>Go ahead and click "Start Rollout" to push this change to the agent.</p>
 <div class="admonition tip">
 <p class="admonition-title">Infrastructure as Code</p>
 <p>Notice the "Compare" button next to "Start Rollout".  Clicking it will show you the underlying declarative YAML that is used to construct your configuration.</p>
 </div>
 <h3 id="7-filtering-in-dynatrace">7. Filtering in Dynatrace<a class="headerlink" href="#7-filtering-in-dynatrace" title="Permanent link">#</a></h3>
-<p>Once the rollout is complete, switch to your Dynatrace environment and cick "Run Query" again to fetch the latest logs.</p>
+<p>Once the rollout is complete, switch to your Dynatrace environment and click "Run Query" again to fetch the latest logs.</p>
 <p>Click on one of the Syslog logs and see the detailed view on the right side of the window.  There's our added field!  Now we can use it to filter for any logs coming from this lab.</p>
 <p><img alt="alt text" src="../img/5-add-field/7-field-in-dynatrace.png" /></p>
 <p>Add a filter to this view to see only our Bindplane Lab logs:</p>

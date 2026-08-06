@@ -642,14 +642,14 @@
 <p><a href="https://docs.dynatrace.com/docs/platform/openpipeline">OpenPipeline</a> is Dynatrace's solution for ingesting, transforming, and routing observability data from any source, at any scale, directly within the Platform.</p>
 <p>Here, we'll use it to parse and structure our logs, making them even easier to store, filter and query.</p>
 <h3 id="1-understanding-syslog">1. Understanding Syslog<a class="headerlink" href="#1-understanding-syslog" title="Permanent link">#</a></h3>
-<p>Even though we've got some great contextual information in our logs, there is more we can extract from them.  The <a href="https://datatracker.ietf.org/doc/html/rfc5424">Syslog specification</a> declares additional metadata in addition to the actual log message.  But all of that context is trapped inside our <code>content</code> field as a string.  Here's what wer're missing out on:</p>
+<p>Even though we've got some great contextual information in our logs, there is more we can extract from them.  The <a href="https://datatracker.ietf.org/doc/html/rfc5424">Syslog specification</a> declares additional metadata in addition to the actual log message.  But all of that context is trapped inside our <code>content</code> field as a string.  Here's what we're missing out on:</p>
 <p><img alt="Sylog Unparsed" src="../img/6-parsing-with-openpipeline/1-syslog-unparsed.png" /></p>
 <p>Also notice that all of our logs have a status of <code>NONE</code> because there was no included status or level field.</p>
 <h3 id="2-creating-a-pipeline-to-parse-logs">2. Creating a Pipeline to Parse logs<a class="headerlink" href="#2-creating-a-pipeline-to-parse-logs" title="Permanent link">#</a></h3>
 <p>Were going to create a pipeline that will automatically parse our Syslog-formatted logs, pulling valuable context into separate fields, so we can query, filter, sort, etc.</p>
 <p>In Dynatrace, navigate to your Environment Settings, or search for "OpenPipeline", then:</p>
 <ol>
-<li>Click "Process and Contexualize"</li>
+<li>Click "Process and Contextualize"</li>
 <li>Click "Logs"</li>
 </ol>
 <p><img alt="OpenPipeline Settings" src="../img/6-parsing-with-openpipeline/2-openpipeline-setttings.png" /></p>
@@ -680,8 +680,8 @@
 </ol>
 <p><img alt="Choose Technology Bundle" src="../img/6-parsing-with-openpipeline/3-choose-bundle.png" /></p>
 <p>Normally, this Processor would be ready to go as-is, but we have some special circumstances.  Luckily OpenPipeline is flexible and configurable and can accommodate our situation.</p>
-<p>Processers in OpenPipeline use a <a href="https://docs.dynatrace.com/docs/platform/openpipeline/reference/dql/dql-matcher-in-openpipeline">matching condition</a> to test whether or not they should be applied to each log message that passes through the pipeline.</p>
-<p>It's a common convention to write syslog messages to <code>/var/log/syslog</code>, so the default matching condition is written as (with additional support for logs that are send via Dynatrace's syslog extension):</p>
+<p>Processors in OpenPipeline use a <a href="https://docs.dynatrace.com/docs/platform/openpipeline/reference/dql/dql-matcher-in-openpipeline">matching condition</a> to test whether or not they should be applied to each log message that passes through the pipeline.</p>
+<p>It's a common convention to write syslog messages to <code>/var/log/syslog</code>, so the default matching condition is written as (with additional support for logs that are sent via Dynatrace's syslog extension):</p>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>matchesValue(dt.openpipeline.source, &quot;extension:syslog&quot;) or matchesValue(log.source, &quot;/var/log/syslog&quot;)
 </span></code></pre></div>
 You may recall that our syslog messages aren't written to <code>/var/log/syslog</code>.  In fact, we don't even have a field available to us named <code>log.source</code>.</p>
@@ -696,11 +696,11 @@ You may recall that our syslog messages aren't written to <code>/var/log/syslog<
 <p><img alt="Matching Condition" src="../img/6-parsing-with-openpipeline/3-matcher.png" /></p>
 <p>Finally, click "Save" to save the overall pipeline configuration.</p>
 <h3 id="create-a-dynamic-route">Create a Dynamic Route<a class="headerlink" href="#create-a-dynamic-route" title="Permanent link">#</a></h3>
-<p>Our processor is all set up, but it's not actually going to do anything, because no logs are being sent through our pipeline.  OpenPipeline uses <a href="https://docs.dynatrace.com/docs/platform/openpipeline/get-started/how-to-routing">Dynamic Routes</a> to faclitate this. Similarly to the Matching Conditions for a Processor, Dynamic Routes use matching conditions to route data coming into your environment to a particular pipeline.</p>
-<p>We want to send all the logs from our Dev Container to the pipeline that we just created.  Can you think of a matching condition that would acheive that?</p>
+<p>Our processor is all set up, but it's not actually going to do anything, because no logs are being sent through our pipeline.  OpenPipeline uses <a href="https://docs.dynatrace.com/docs/platform/openpipeline/get-started/how-to-routing">Dynamic Routes</a> to facilitate this. Similarly to the Matching Conditions for a Processor, Dynamic Routes use matching conditions to route data coming into your environment to a particular pipeline.</p>
+<p>We want to send all the logs from our Dev Container to the pipeline that we just created.  Can you think of a matching condition that would achieve that?</p>
 <details class="tip">
 <summary>Hint</summary>
-<p>Remember the Bindplane processor that we used to add a field to all of the logs in our pipeline?  That field was named <code>project</code> and its value is <code>binplane-logs-lab</code> (or whatever you chose at the time)</p>
+<p>Remember the Bindplane processor that we used to add a field to all of the logs in our pipeline?  That field was named <code>project</code> and its value is <code>bindplane-logs-lab</code> (or whatever you chose at the time)</p>
 </details>
 <p>Return to the OpenPipeline Logs settings page</p>
 <ol>
@@ -722,7 +722,7 @@ You may recall that our syslog messages aren't written to <code>/var/log/syslog<
 <p><img alt="Parsed Logs" src="../img/6-parsing-with-openpipeline/5-parsed-logs.png" /></p>
 <div class="grid cards">
 <ul>
-<li><a href="./">Masking Sensitive Data and Routing<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+<li><a href="../7-masking-routing/">Masking Sensitive Data and Routing<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
 </ul>
 </div>
 
