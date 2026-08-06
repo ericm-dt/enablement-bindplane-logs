@@ -80,6 +80,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parsing-with-openpipeline" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -367,6 +372,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    6. Parsing with OpenPipeline
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -376,6 +392,83 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-with-openpipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing with OpenPipeline
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parsing with OpenPipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-understanding-syslog" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Understanding Syslog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-creating-a-pipeline-to-parse-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Creating a Pipeline to Parse logs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-creating-a-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Creating a Processor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-dynamic-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a Dynamic Route
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-parsed-syslog" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Verify Parsed Syslog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -459,6 +552,74 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-with-openpipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing with OpenPipeline
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parsing with OpenPipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-understanding-syslog" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Understanding Syslog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-creating-a-pipeline-to-parse-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Creating a Pipeline to Parse logs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-creating-a-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Creating a Processor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-dynamic-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a Dynamic Route
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-parsed-syslog" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Verify Parsed Syslog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -477,7 +638,93 @@
 
   <h1>6. Parsing with OpenPipeline</h1>
 
-<p>Topics:  openpipeline, Syslog technology bundle</p>
+<h2 id="parsing-with-openpipeline">Parsing with OpenPipeline<a class="headerlink" href="#parsing-with-openpipeline" title="Permanent link">#</a></h2>
+<p><a href="https://docs.dynatrace.com/docs/platform/openpipeline">OpenPipeline</a> is Dynatrace's solution for ingesting, transforming, and routing observability data from any source, at any scale, directly within the Platform.</p>
+<p>Here, we'll use it to parse and structure our logs, making them even easier to store, filter and query.</p>
+<h3 id="1-understanding-syslog">1. Understanding Syslog<a class="headerlink" href="#1-understanding-syslog" title="Permanent link">#</a></h3>
+<p>Even though we've got some great contextual information in our logs, there is more we can extract from them.  The <a href="https://datatracker.ietf.org/doc/html/rfc5424">Syslog specification</a> declares additional metadata in addition to the actual log message.  But all of that context is trapped inside our <code>content</code> field as a string.  Here's what wer're missing out on:</p>
+<p><img alt="Sylog Unparsed" src="../img/6-parsing-with-openpipeline/1-syslog-unparsed.png" /></p>
+<p>Also notice that all of our logs have a status of <code>NONE</code> because there was no included status or level field.</p>
+<h3 id="2-creating-a-pipeline-to-parse-logs">2. Creating a Pipeline to Parse logs<a class="headerlink" href="#2-creating-a-pipeline-to-parse-logs" title="Permanent link">#</a></h3>
+<p>Were going to create a pipeline that will automatically parse our Syslog-formatted logs, pulling valuable context into separate fields, so we can query, filter, sort, etc.</p>
+<p>In Dynatrace, navigate to your Environment Settings, or search for "OpenPipeline", then:</p>
+<ol>
+<li>Click "Process and Contexualize"</li>
+<li>Click "Logs"</li>
+</ol>
+<p><img alt="OpenPipeline Settings" src="../img/6-parsing-with-openpipeline/2-openpipeline-setttings.png" /></p>
+<p>This will take you to the main configuration for OpenPipeline.</p>
+<ol>
+<li>Click on the "Pipelines" tab, showing you all of your pipelines</li>
+<li>Click on the "+ Pipeline" Button</li>
+</ol>
+<p><img alt="Pipeline LIst" src="../img/6-parsing-with-openpipeline/2-pipeline-list.png" /></p>
+<h3 id="3-creating-a-processor">3. Creating a Processor<a class="headerlink" href="#3-creating-a-processor" title="Permanent link">#</a></h3>
+<p>Similarly to Bindplane, OpenPipeline uses <a href="https://docs.dynatrace.com/docs/platform/openpipeline/concepts/processing">Processors</a> to reshape and enrich data.  We're going to add a processor to our pipeline that will do the parsing and assignment of fields from our Syslog-formatted logs.  Dynatrace makes this possible with pre-configured <a href="https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-processing/lma-tech-bundles-processors">Technology Bundles</a></p>
+<div class="admonition info">
+<p class="admonition-title">Technology Bundles</p>
+<p>Technology bundles normalize diverse log formats into consistent attributes aligned with the Semantic Dictionary, automatically extract key fields, and enable immediate DQL enrichment, searching, and alerting for faster troubleshooting, reliable analytics, and improved data quality.</p>
+</div>
+<ol>
+<li>Choose a descriptive name for your Pipeline, like "Bindplane Lab"</li>
+<li>Expand the Processors drawer by clicking on the chevron</li>
+<li>Click the "+ Add" Button</li>
+<li>Choose "Technology Bundle"</li>
+</ol>
+<p><img alt="Add a Processor" src="../img/6-parsing-with-openpipeline/3-add-processor.png" /></p>
+<p>On the following dialog,</p>
+<ol>
+<li>Search for "Syslog"</li>
+<li>Click on the Syslog button</li>
+<li>Click "Choose"</li>
+</ol>
+<p><img alt="Choose Technology Bundle" src="../img/6-parsing-with-openpipeline/3-choose-bundle.png" /></p>
+<p>Normally, this Processor would be ready to go as-is, but we have some special circumstances.  Luckily OpenPipeline is flexible and configurable and can accommodate our situation.</p>
+<p>Processers in OpenPipeline use a <a href="https://docs.dynatrace.com/docs/platform/openpipeline/reference/dql/dql-matcher-in-openpipeline">matching condition</a> to test whether or not they should be applied to each log message that passes through the pipeline.</p>
+<p>It's a common convention to write syslog messages to <code>/var/log/syslog</code>, so the default matching condition is written as (with additional support for logs that are send via Dynatrace's syslog extension):</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>matchesValue(dt.openpipeline.source, &quot;extension:syslog&quot;) or matchesValue(log.source, &quot;/var/log/syslog&quot;)
+</span></code></pre></div>
+You may recall that our syslog messages aren't written to <code>/var/log/syslog</code>.  In fact, we don't even have a field available to us named <code>log.source</code>.</p>
+<p>Can you think of a field that we can use instead?  Maybe open a new browser tab and inspect our logs for a field that serves the same purpose.</p>
+<details class="tip">
+<summary>Hint</summary>
+<p>Our logs have a field named <code>log.file.name</code>, and its value is "syslog".</p>
+</details>
+<p>Switch the Matching Condition to a custom one, and use the following condition:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>matchesValue(log.file.name, &quot;syslog&quot;)
+</span></code></pre></div></p>
+<p><img alt="Matching Condition" src="../img/6-parsing-with-openpipeline/3-matcher.png" /></p>
+<p>Finally, click "Save" to save the overall pipeline configuration.</p>
+<h3 id="create-a-dynamic-route">Create a Dynamic Route<a class="headerlink" href="#create-a-dynamic-route" title="Permanent link">#</a></h3>
+<p>Our processor is all set up, but it's not actually going to do anything, because no logs are being sent through our pipeline.  OpenPipeline uses <a href="https://docs.dynatrace.com/docs/platform/openpipeline/get-started/how-to-routing">Dynamic Routes</a> to faclitate this. Similarly to the Matching Conditions for a Processor, Dynamic Routes use matching conditions to route data coming into your environment to a particular pipeline.</p>
+<p>We want to send all the logs from our Dev Container to the pipeline that we just created.  Can you think of a matching condition that would acheive that?</p>
+<details class="tip">
+<summary>Hint</summary>
+<p>Remember the Bindplane processor that we used to add a field to all of the logs in our pipeline?  That field was named <code>project</code> and its value is <code>binplane-logs-lab</code> (or whatever you chose at the time)</p>
+</details>
+<p>Return to the OpenPipeline Logs settings page</p>
+<ol>
+<li>This time, select the "Dynamic Routing" tab</li>
+<li>Click "+ Dynamic Route"</li>
+</ol>
+<p><img alt="Create a Dynamic Route" src="../img/6-parsing-with-openpipeline/4-create-dynamic-route.png" /></p>
+<p>On the dialog:</p>
+<ol>
+<li>Choose a descriptive name for this route</li>
+<li>Enter the matching condition for the field we added in Bindplane:  <code>matchesValue(project, "bindplane-logs-lab")</code></li>
+<li>Choose the Pipeline that we just created</li>
+<li>Click "Add"</li>
+</ol>
+<p><img alt="Configure Dyamic Route" src="../img/6-parsing-with-openpipeline/4-configure-dynamic-route.png" /></p>
+<p>Confirm that you want to save your changes to the table.</p>
+<h3 id="5-verify-parsed-syslog">5. Verify Parsed Syslog<a class="headerlink" href="#5-verify-parsed-syslog" title="Permanent link">#</a></h3>
+<p>Return to the logs app in Dynatrace an click "Run Query" to retrieve the latest logs.  Click on one of them to view detail.  Notice how much more context we have!  Just from adding a single processor.</p>
+<p><img alt="Parsed Logs" src="../img/6-parsing-with-openpipeline/5-parsed-logs.png" /></p>
+<div class="grid cards">
+<ul>
+<li><a href="./">Masking Sensitive Data and Routing<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+</ul>
+</div>
 
 
 
