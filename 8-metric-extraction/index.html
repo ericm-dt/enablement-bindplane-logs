@@ -80,6 +80,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#extracting-metrics-from-logs" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -407,6 +412,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    8. Extracting Metrics from Logs
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -416,6 +432,74 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extracting-metrics-from-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extracting Metrics from Logs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extracting Metrics from Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-parse-the-credential-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Parse the Credential Key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-a-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Create a Metric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metrics-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-and-using-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploring and Using Metrics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -459,6 +543,65 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extracting-metrics-from-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extracting Metrics from Logs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extracting Metrics from Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-parse-the-credential-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Parse the Credential Key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-a-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Create a Metric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metrics-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-and-using-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploring and Using Metrics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -477,7 +620,75 @@
 
   <h1>8. Extracting Metrics from Logs</h1>
 
-<p>Topics: counter metrics</p>
+<h2 id="extracting-metrics-from-logs">Extracting Metrics from Logs<a class="headerlink" href="#extracting-metrics-from-logs" title="Permanent link">#</a></h2>
+<p>Now that we've got our credential leak under control, leadership is asking for an assessment of the overall impact.  Let's figure out how many keys were exposed, and which ones.</p>
+<p>Let's use Bindplane to create a metric for us. </p>
+<h3 id="1-parse-the-credential-key">1. Parse the Credential Key<a class="headerlink" href="#1-parse-the-credential-key" title="Permanent link">#</a></h3>
+<p>We're going to want to find out how many different sets of credentials were leaked, and how often.
+Let's add a processor to the same node we used to redact the sensitive information.</p>
+<ol>
+<li>Click "Add Processor".  Make sure to add the new processor after the Redaction one.  Processors are executed from top to bottom and we want to parse the redacted value, not the original one.</li>
+<li>Find the Processor named "Parse with Regex" and select it.</li>
+<li>Create a name for the new Proccesor</li>
+<li>Beacuse we have already routed the logs, we know that only the logs we are targeting will ever pass through this processor, so no need for a condition.</li>
+<li>For "Target Field Type", select "Attribute".  This means we want to add a new attribute field as a peer to the log body, not modify the body itself.</li>
+<li>Leave target field blank - this will allow us to name the field inside of our regular expression (useful for parsing multiple fields at once)</li>
+<li>Enter this regular expression: <code>BCH_ACCESS_KEY_ID=(?&lt;bch_access_key_id&gt;\w+)</code> it will match the key name and then capture the next string of word characters (<code>\w+</code>) after the equals sign. Whatever we place between <code>&lt;</code> and <code>&gt;</code> will become the attribute name.</li>
+</ol>
+<p>You should see that the regular expression matches the key name.  Click "Save" and you'll see a preview of the extracted field on the right.</p>
+<p><img alt="Parse Regex" src="../img/8-metric-extraction/1-parse-regex.png" /></p>
+<p>Save the changes to your processor and then rollout your changes to the agent.</p>
+<h3 id="2-create-a-metric">2. Create a Metric<a class="headerlink" href="#2-create-a-metric" title="Permanent link">#</a></h3>
+<p>To create a metric from logs, we'll use a "Signal to Metric" connector.</p>
+<p>In the output of the processor we just created, click on the pencil icon, create a connector, and then choose "Signal to Metric"</p>
+<p><img alt="Create Connector" src="../img/8-metric-extraction/2-create-connector.gif" /></p>
+<p>Once the dialog for the connector opens, edit the configuration:</p>
+<ol>
+<li>Create the Metric Name <code>log.exposed_bch_credentials.count</code></li>
+<li>Select "Sum" for the Metric Type and leave the value as 1.  This will count 1 for every occurrence of our log.</li>
+<li>Add the attribute from our log for the key that we masked <code>bch_access_key_id</code>.  This will add a dimension to the metric that we can split or summarize by.</li>
+<li>Click "Save" to create it.</li>
+</ol>
+<p><img alt="Signal to Metrics" src="../img/8-metric-extraction/2-signal-to-metrics-connector.png" /></p>
+<h3 id="metrics-pipeline">Metrics Pipeline<a class="headerlink" href="#metrics-pipeline" title="Permanent link">#</a></h3>
+<p>Once your connector is created, you'll notice the layout of your pipeline has changed, and your connector doesn't sit exactly between the processor and the output.</p>
+<p><img alt="New Connector" src="../img/8-metric-extraction/3-added-signal-to-metrics.png" /></p>
+<p>This is beacuse we are now emitting a new telemetry type, Metrics, from our pipeline.  At this point, Bindplane will automatically route the Metrics coming out the this connector into our <strong>Metrics Pipeline</strong>.</p>
+<p>The Metrics Pipeline is just below the logs piplin in the UI. Scroll down and expand it by clicking on the chevron.  </p>
+<p><strong>Rollout the changes</strong> and you'll see that the new Metric we created is flowing through this pipeline and to our Dynatrace destination.</p>
+<p><img alt="Metrics Pipeline" src="../img/8-metric-extraction/3-metrics-pipeline.png" /></p>
+<h3 id="exploring-and-using-metrics">Exploring and Using Metrics<a class="headerlink" href="#exploring-and-using-metrics" title="Permanent link">#</a></h3>
+<p>Now let's head over to Dynatrace to explore the new Metric.</p>
+<ol>
+<li>Create a new <a href="https://docs.dynatrace.com/docs/analyze-explore-automate/dashboards-and-notebooks/notebooks">Notebook</a> where you'll be able to run some queries.</li>
+<li>Create a new Section of DQL type.</li>
+</ol>
+<p>DQL has a command named <a href="https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language/commands/metric-commands#metrics"><code>metrics</code></a> that allows you to explore the presence and structure of the metrics, rather than charting or calculating them.</p>
+<p>Use the following query to see if the metric you created is being ingested:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>metrics | filter matchesPhrase(metric.key, &quot;bch&quot;)
+</span></code></pre></div>
+The results should show a permutation of that metric key for each of the exposed credential attribute values.</p>
+<p><img alt="Metric Keys" src="../img/8-metric-extraction/4-metric-key-query.png" /></p>
+<p>Now let's do something useful with that data.  We want to find out how many sets of credentials were exposed. For that, we can use the <a href="https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language/commands/metric-commands#timeseries"><code>timeseries</code></a> command, which will return a series of values for the metric key we specify.</p>
+<p>Write a DQL query that will show how many sets of credentials are exposed.</p>
+<details class="hint">
+<summary>Timeseries Summarization</summary>
+<p>The straightforward way to use a timeseries is simply to plot the a line chart for each series split with the <code>by:</code> paramter:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>timeseries total = sum(log.exposed_bch_credentials.count), by: {bch_access_key_id}
+</span></code></pre></div>
+But with DQL, we can summarize even further - say, if we wanted to see a <em>total</em> of all of the values within the query timeframe:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>timeseries ts = sum(log.exposed_bch_credentials.count), by: {bch_access_key_id}
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    | fieldsAdd total = arraySum(ts)
+</span></code></pre></div></p>
+</details>
+<p>Run your query and inspect the results.</p>
+<p><img alt="Timeseries" src="../img/8-metric-extraction/4-timeseries-query.png" /></p>
+<p>Now we can hash all of our credentials securely offline, and compare them to the values here to see which ones have been leaked!</p>
+<div class="grid cards">
+<ul>
+<li><a href="../9-bindplane-health/">Bindplane Health<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+</ul>
+</div>
 
 
 
