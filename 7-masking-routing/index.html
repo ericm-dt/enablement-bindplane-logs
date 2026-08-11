@@ -645,6 +645,8 @@
 <p class="admonition-title">Example Credentials</p>
 <p>All logs in the lab, including the ones in this exercise are randomly and synthetically generated.</p>
 </div>
+<p>This is a realistic and common scenario. Infrastructure automation scripts frequently use environment variables or command-line arguments that get captured by <code>auditd</code> or similar system loggers. The credentials themselves are synthetically generated for this lab, but the pattern is real.</p>
+<p>The right fix is to prevent the sensitive data from ever leaving your infrastructure. BindPlane's <strong>Redact Sensitive Data</strong> processor lets you define regex patterns that match sensitive values and replace them — in this case using a <strong>hashing</strong> strategy. Hashing is preferable to blank redaction here because it preserves uniqueness: if the same credential appears in multiple log records, they'll all produce the same hash, which means you can still assess the scope of the leak without ever exposing the raw value.</p>
 <p>Let's look through our logs for any credentials for our vendor, <strong>Big Cloud Hyperscaler</strong>.</p>
 <p>Head back to the Logs app in Dynatrace and filter for the terms "BCH" and "KEY" in our log messages.</p>
 <p><img alt="Exposed Keys" src="../img/7-masking-routing/1-sensitive-data-unredacted.png" /></p>

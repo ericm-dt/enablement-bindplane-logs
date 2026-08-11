@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#about" class="md-skip">
+        <a href="#prerequisites" class="md-skip">
           Skip to content
         </a>
       
@@ -305,15 +305,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#about" class="md-nav__link">
-    <span class="md-ellipsis">
-      About
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
@@ -515,15 +506,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#about" class="md-nav__link">
-    <span class="md-ellipsis">
-      About
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
@@ -552,15 +534,27 @@
 
   <h1>1. About</h1>
 
-<h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">#</a></h2>
-<p>_ text about what the lab is... _</p>
+<p>In this hands-on lab, you'll build that pipeline end to end. Using <strong>BindPlane</strong> as your collection and processing layer and <strong>Dynatrace</strong> as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace — where <strong>OpenPipeline</strong> takes over to parse and further enrich it.</p>
+<p>By the end of the lab, you'll know how to:</p>
+<ul>
+<li>Deploy and configure a BindPlane agent on a Linux host</li>
+<li>Define sources, processors, and destinations in a BindPlane configuration</li>
+<li>Enrich logs with custom metadata before they leave the host</li>
+<li>Parse structured fields out of raw syslog content using Dynatrace OpenPipeline</li>
+<li>Detect and mask sensitive credentials in-flight using regex-based redaction</li>
+<li>Route logs selectively so only the right data passes through each processor</li>
+<li>Convert log events into metrics and query them with DQL</li>
+<li>Monitor the health of your BindPlane pipeline itself using self-monitoring</li>
+</ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <ul>
 <li>BindPlane account and project</li>
 <li>Dynatrace tenant</li>
 <li>Dynatrace token with the following permissions:<ul>
-<li><code>logs.ingest</code></li>
-<li><code>metrics.ingest</code></li>
+<li>storage:logs:write</li>
+<li>openpipeline:logs:ingest</li>
+<li>storage:metrics:write</li>
+<li>openpipeline:metrics:ingest</li>
 </ul>
 </li>
 <li>One of:<ul>

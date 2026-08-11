@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lets-get-started-on-installing-our-bindplane-agent" class="md-skip">
+        <a href="#1-navigate-to-your-bindplane-account" class="md-skip">
           Skip to content
         </a>
       
@@ -347,16 +347,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#lets-get-started-on-installing-our-bindplane-agent" class="md-nav__link">
-    <span class="md-ellipsis">
-      Let's get started on installing our Bindplane Agent
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Let's get started on installing our Bindplane Agent">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#1-navigate-to-your-bindplane-account" class="md-nav__link">
     <span class="md-ellipsis">
       1. Navigate to your Bindplane account
@@ -364,8 +354,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#2-specify-your-agent-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       2. Specify your agent configuration
@@ -373,18 +363,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#install-the-agent" class="md-nav__link">
     <span class="md-ellipsis">
       Install the agent
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -541,16 +526,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#lets-get-started-on-installing-our-bindplane-agent" class="md-nav__link">
-    <span class="md-ellipsis">
-      Let's get started on installing our Bindplane Agent
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Let's get started on installing our Bindplane Agent">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#1-navigate-to-your-bindplane-account" class="md-nav__link">
     <span class="md-ellipsis">
       1. Navigate to your Bindplane account
@@ -558,8 +533,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#2-specify-your-agent-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       2. Specify your agent configuration
@@ -567,18 +542,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#install-the-agent" class="md-nav__link">
     <span class="md-ellipsis">
       Install the agent
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -602,7 +572,8 @@
 
   <h1>3. Installing the Bindplane Agent</h1>
 
-<h2 id="lets-get-started-on-installing-our-bindplane-agent">Let's get started on installing our Bindplane Agent<a class="headerlink" href="#lets-get-started-on-installing-our-bindplane-agent" title="Permanent link">#</a></h2>
+<p>The <strong>BindPlane Agent</strong> is the component that runs on a host and collects telemetry. Its BindPlane's distribution of the OpenTelemetry Collector — purpose-built for managed deployment, meaning BindPlane can push configuration changes to it remotely via the OpAmp protocol, without you ever touching the host directly.</p>
+<p>Once the agent is running and visible in the BindPlane UI, you're ready to tell it what to collect and where to send it.</p>
 <h3 id="1-navigate-to-your-bindplane-account">1. Navigate to your Bindplane account<a class="headerlink" href="#1-navigate-to-your-bindplane-account" title="Permanent link">#</a></h3>
 <p>Click the button "Install Agent"
 <img alt="Install Agent" src="../img/3-bindplane-agent/install_agent.png" /></p>
@@ -621,7 +592,7 @@
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Bindplane Startup</p>
-<p>Don't use the <code>systemctl</code> command to start Bindplane as the installation script mentions.  Instead, use the <code>startBindplane</code> command.</p>
+<p>Don't use the <code>systemctl</code> command to start Bindplane as the installation script mentions.  Instead, use the <code>startBindplane</code> command available in your terminal.</p>
 </div>
 <p>Once you've run that command, you should see your agent show up in the Bindplane UI.  It will be named after the host it is installed on.  If you are using a Codespace, it will be your Codespace name.  If you are using a local Dev Container, it will take the name of your Docker implementation.</p>
 <p><img alt="Success" src="../img/3-bindplane-agent/success.png" /></p>
