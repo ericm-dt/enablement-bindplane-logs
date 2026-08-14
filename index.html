@@ -534,21 +534,21 @@
 
   <h1>1. About</h1>
 
-<p>In this hands-on lab, you're going to build a Telemetry Pipeline end-to-und. Using <strong>BindPlane</strong> as your collection and processing layer and <strong>Dynatrace</strong> as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace — where <strong>OpenPipeline</strong> takes over to parse and further enrich it.</p>
+<p>In this hands-on lab, you're going to build a Telemetry Pipeline end-to-end. Using <strong>Bindplane</strong> as your collection and processing layer and <strong>Dynatrace</strong> as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace, where <strong>OpenPipeline</strong> takes over to parse and further enrich it.</p>
 <p>By the end of the lab, you'll know how to:</p>
 <ul>
-<li>Deploy and configure a BindPlane agent on a Linux host</li>
-<li>Define sources, processors, and destinations in a BindPlane configuration</li>
+<li>Deploy and configure a Bindplane agent on a Linux host</li>
+<li>Define sources, processors, and destinations in a Bindplane configuration</li>
 <li>Enrich logs with custom metadata before they leave the host</li>
 <li>Parse structured fields out of raw syslog content using Dynatrace OpenPipeline</li>
 <li>Detect and mask sensitive credentials in-flight using regex-based redaction</li>
 <li>Route logs selectively so only the right data passes through each processor</li>
 <li>Convert log events into metrics and query them with DQL</li>
-<li>Monitor the health of your BindPlane pipeline itself using self-monitoring</li>
+<li>Monitor the health of your Bindplane pipeline itself using self-monitoring</li>
 </ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <ul>
-<li>BindPlane account and project</li>
+<li>Bindplane account and project</li>
 <li>Dynatrace tenant</li>
 <li>Dynatrace token with the following permissions:<ul>
 <li>storage:logs:write</li>

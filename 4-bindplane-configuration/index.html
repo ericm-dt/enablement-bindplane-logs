@@ -680,13 +680,13 @@
 
   <h1>4. Bindplane Configuration</h1>
 
-<p>A BindPlane <strong>Configuration</strong> is a reusable, version-controlled definition of a telemetry pipeline. It describes three things: where data comes from (<strong>Sources</strong>), how it's transformed in-flight (<strong>Processors</strong>), and where it's sent (<strong>Destinations</strong>). Once a configuration is created, it can be deployed to one or many agents with a single rollout — and rolled back just as easily if something goes wrong.</p>
+<p>A Bindplane <strong>Configuration</strong> is a reusable, version-controlled definition of a telemetry pipeline. It describes three things: where data comes from (<strong>Sources</strong>), how it's transformed in-flight (<strong>Processors</strong>), and where it's sent (<strong>Destinations</strong>). Once a configuration is created, it can be deployed to one or many agents with a single rollout, and rolled back just as easily if something goes wrong.</p>
 <p>In this section, you'll build your first configuration:</p>
 <ul>
-<li><strong>Source:</strong> a File source pointed at <code>/var/log/bpsystem/syslog</code>, using BindPlane's built-in filelog receiver to tail the syslog file your Dev Container is actively writing to</li>
+<li><strong>Source:</strong> a File source pointed at <code>/var/log/bpsystem/syslog</code>, using Bindplane's built-in filelog receiver to tail the syslog file your Dev Container is actively writing to</li>
 <li><strong>Destination:</strong> the Dynatrace destination, which sends logs over OTLP/HTTP directly to your Dynatrace environment using your environment ID and platform token</li>
 </ul>
-<p>Once you assign your agent to the configuration and roll it out, you'll be able to see log throughput in the BindPlane pipeline overview and verify that raw syslog records are appearing in Dynatrace's Logs app. They'll be unstructured at this point — a flat string of text — but they're flowing, and that's the foundation everything else builds on.</p>
+<p>Once you assign your agent to the configuration and roll it out, you'll be able to see log throughput in the Bindplane pipeline overview and verify that raw syslog records are appearing in Dynatrace's Logs app.</p>
 <h3 id="1-create-the-configuration">1. Create the configuration<a class="headerlink" href="#1-create-the-configuration" title="Permanent link">#</a></h3>
 <p>Choose a descriptive name for your configuration, choose <strong>Linux</strong> for the platform, and click "next"
 <img alt="alt text" src="../img/4-bindplane-configuration/1-create-configuration.png" /></p>
@@ -710,6 +710,7 @@
 </ol>
 <p><img alt="alt text" src="../img/4-bindplane-configuration/4-find-destination.png" /></p>
 <h3 id="5-configure-the-destination">5. Configure the Destination<a class="headerlink" href="#5-configure-the-destination" title="Permanent link">#</a></h3>
+<p>Have a look at the documentation for Dyntrace's <a href="https://docs.dynatrace.com/docs/ingest-from/opentelemetry/otlp-api#base-url">OTel API</a> to understand how to structure your endpoint URL.</p>
 <ol>
 <li>Give this Destination a descriptive name</li>
 <li>Enter your Dynatrace <a href="https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id">Environment Id</a> </li>
